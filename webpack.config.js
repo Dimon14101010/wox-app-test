@@ -91,7 +91,7 @@ module.exports = {
     "path": path.join(process.cwd(), "dist"),
     "filename": "[name].bundle.js",
     "chunkFilename": "[id].chunk.js",
-    "publicPath": process.cwd()
+    "publicPath": "/"
   },
   "module": {
     "rules": [
