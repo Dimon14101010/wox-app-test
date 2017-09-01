@@ -21,7 +21,7 @@
       <div><input type="text" placeholder="search by quantity..."></div>
     </td>
   </tr>
-  <tr *ngFor="let row of data | search: searchText" align="center">
+  <tr *ngFor="let row of data | search:searchText ; let i=index" align="center">
     <td *ngFor="let cell of row ">{{cell}}</td>
   </tr>
 </table>
