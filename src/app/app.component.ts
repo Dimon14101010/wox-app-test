@@ -8,10 +8,13 @@ import {SearchPipe} from "../pipes/search.pipe";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  itemsOnPage = 50;
+  itemsOnPage = 10;
+  searchText;
   pages = [];
   headerdata: any = [];
   data: any = [];
+  startIndex: number;
+  endIndex: number;
   constructor (private http: HttpClient) {
 
   }
@@ -23,11 +26,23 @@ export class AppComponent implements OnInit {
           console.log(this.headerdata, this.data);
           this.pages = new Array(Math.ceil(this.data.length / this.itemsOnPage));
         });
+      this.startIndex = 0;
+      this.endIndex = this.itemsOnPage + 1;
 
 
   }
-  show() {
-    console.log (this.data);
+  nextPage (){
+    this.startIndex += this.itemsOnPage;
+    this.endIndex += this.itemsOnPage;
+  }
+  prevPage (){
+    this.startIndex -= this.itemsOnPage;
+    this.endIndex -= this.itemsOnPage;
+  }
+  setPage (page){
+    this.startIndex = (page) * this.itemsOnPage;
+    this.endIndex = (this.startIndex + this.itemsOnPage);
+    console.log(this.startIndex, this.endIndex)
   }
 }
 

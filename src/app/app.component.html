@@ -1,5 +1,7 @@
 <div style="display: flex;flex-direction: row;">
-  <div *ngFor="let page of pages;let i = index" style="background-color: lightgray;padding: 10px;margin: 5px">{{i+1}}</div>
+  <div *ngIf="startIndex > itemsOnPage-1" (click)="prevPage()"style="background-color: lightgray;padding: 10px;margin: 5px">previous</div>
+  <div *ngFor="let page of pages; let i = index" (click)="setPage(i)" style="background-color: lightgray;padding: 10px;margin: 5px">{{i+1}}</div>
+  <div *ngIf="endIndex < data.length" (click)="nextPage()"style="background-color: lightgray;padding: 10px;margin: 5px">next</div>
 </div>
 <!--<pre>{{data | json}}</pre>-->
 <div><input [(ngModel)]="searchText" type="text" placeholder="search by name..."></div>
@@ -18,7 +20,7 @@
       {{headerdata?.quantity}}
     </th>
   </tr>
-  <tr *ngFor="let row of data | search:searchText ; let i=index" align="center">
+  <tr *ngFor="let row of data | search:searchText:startIndex:endIndex ; let i=index" align="center">
     <td *ngFor="let cell of row ">{{cell}}</td>
   </tr>
 </table>
