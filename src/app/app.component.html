@@ -2,26 +2,23 @@
   <div *ngFor="let page of pages;let i = index" style="background-color: lightgray;padding: 10px;margin: 5px">{{i+1}}</div>
 </div>
 <!--<pre>{{data | json}}</pre>-->
+<div><input [(ngModel)]="searchText" type="text" placeholder="search by name..."></div>
 <table>
   <tr align="center">
-    <td>
-      <span>{{headerdata?.id}}</span>
-      <div><input  type="text" placeholder="search by id..."></div>
-    </td>
-    <td>
+    <th>
+      {{headerdata?.id}}
+    </th>
+    <th>
       <span>{{headerdata?.name}}</span>
-      <div><input [(ngModel)]="searchText" type="text" placeholder="search by name..."></div>
-    </td>
-    <td>
-      <span>{{headerdata?.price}}</span>
-      <div><input type="text" placeholder="search by price..."></div>
-    </td>
-    <td>
-      <span>{{headerdata?.quantity}}</span>
-      <div><input type="text" placeholder="search by quantity..."></div>
-    </td>
+    </th>
+    <th>
+      {{headerdata?.price}}
+    </th>
+    <th>
+      {{headerdata?.quantity}}
+    </th>
   </tr>
-  <tr *ngFor="let row of data | search:searchText ; let i=index" align="center">
+  <tr *ngFor="let row of data | search:searchText:1 ; let i=index" align="center">
     <td *ngFor="let cell of row ">{{cell}}</td>
   </tr>
 </table>
