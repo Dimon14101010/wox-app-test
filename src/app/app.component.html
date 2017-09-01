@@ -18,7 +18,7 @@
       {{headerdata?.quantity}}
     </th>
   </tr>
-  <tr *ngFor="let row of data | search:searchText:1 ; let i=index" align="center">
+  <tr *ngFor="let row of data | search:searchText ; let i=index" align="center">
     <td *ngFor="let cell of row ">{{cell}}</td>
   </tr>
 </table>
