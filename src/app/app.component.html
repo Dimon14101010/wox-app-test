@@ -1,29 +1,27 @@
 <div style="display: flex;flex-direction: row;">
   <div *ngFor="let page of pages;let i = index" style="background-color: lightgray;padding: 10px;margin: 5px">{{i+1}}</div>
 </div>
+<!--<pre>{{data | json}}</pre>-->
 <table>
   <tr align="center">
     <td>
-      <span>{{data[0]?.id}}</span>
-      <div><input [(ngModel)]="searchText" type="text" placeholder="search by id..."></div>
+      <span>{{headerdata?.id}}</span>
+      <div><input  type="text" placeholder="search by id..."></div>
     </td>
     <td>
-      <span>{{data[0]?.name}}</span>
-      <div><input type="text" placeholder="search by name..."></div>
+      <span>{{headerdata?.name}}</span>
+      <div><input [(ngModel)]="searchText" type="text" placeholder="search by name..."></div>
     </td>
     <td>
-      <span>{{data[0]?.price}}</span>
+      <span>{{headerdata?.price}}</span>
       <div><input type="text" placeholder="search by price..."></div>
     </td>
     <td>
-      <span>{{data[0]?.quantity}}</span>
+      <span>{{headerdata?.quantity}}</span>
       <div><input type="text" placeholder="search by quantity..."></div>
     </td>
   </tr>
   <tr *ngFor="let row of data | search: searchText" align="center">
-    <td>{{row[0]}}</td>
-    <td>{{row[1]}}</td>
-    <td>{{row[2] | currency:'USD':true}}</td>
-    <td>{{row[3]}}</td>
+    <td *ngFor="let cell of row ">{{cell}}</td>
   </tr>
 </table>
