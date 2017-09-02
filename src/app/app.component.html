@@ -7,20 +7,20 @@
 <div><input [(ngModel)]="searchText" type="text" placeholder="search by name..."></div>
 <table>
   <tr align="center">
-    <th>
+    <th (click)="sortFunc(0)">
       {{headerdata?.id}}
     </th>
-    <th>
+    <th (click)="sortFunc(1)">
       <span>{{headerdata?.name}}</span>
     </th>
-    <th>
+    <th (click)="sortFunc(2)">
       {{headerdata?.price}}
     </th>
-    <th>
+    <th (click)="sortFunc(3)">
       {{headerdata?.quantity}}
     </th>
   </tr>
-  <tr *ngFor="let row of data | search:searchText:startIndex:endIndex ; let i=index" align="center">
+  <tr *ngFor="let row of data | search:searchText:startIndex:endIndex | sort:sortTarget:sortDirection; let i=index" align="center">
     <td *ngFor="let cell of row ">{{cell}}</td>
   </tr>
 </table>

@@ -6,11 +6,13 @@ import {HttpClientModule} from "@angular/common/http";
 import {HttpModule} from "@angular/http";
 import {SearchPipe} from "../pipes/search.pipe";
 import {FormsModule} from "@angular/forms";
+import {SortPipe} from "../pipes/sort.pipe";
 
 @NgModule({
   declarations: [
     AppComponent,
-    SearchPipe
+    SearchPipe,
+    SortPipe
   ],
   imports: [
     BrowserModule,

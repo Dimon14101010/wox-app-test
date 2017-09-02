@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {SearchPipe} from "../pipes/search.pipe";
 
 @Component({
   selector: 'app-root',
@@ -8,13 +7,15 @@ import {SearchPipe} from "../pipes/search.pipe";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  itemsOnPage = 10;
+  itemsOnPage = 50;
+  sortDirection;
   searchText;
   pages = [];
   headerdata: any = [];
   data: any = [];
   startIndex: number;
   endIndex: number;
+  sortTarget = 0;
   constructor (private http: HttpClient) {
 
   }
@@ -23,13 +24,16 @@ export class AppComponent implements OnInit {
         .subscribe((response: Array<any>) => {
           this.data = response.slice(1, response.length);
           this.headerdata = response[0];
-          console.log(this.headerdata, this.data);
           this.pages = new Array(Math.ceil(this.data.length / this.itemsOnPage));
         });
       this.startIndex = 0;
-      this.endIndex = this.itemsOnPage + 1;
+      this.endIndex = this.itemsOnPage;
 
 
+  }
+  sortFunc(arrNumber){
+    this.sortDirection = !this.sortDirection;
+    this.sortTarget = arrNumber;
   }
   nextPage (){
     this.startIndex += this.itemsOnPage;
@@ -42,7 +46,6 @@ export class AppComponent implements OnInit {
   setPage (page){
     this.startIndex = (page) * this.itemsOnPage;
     this.endIndex = (this.startIndex + this.itemsOnPage);
-    console.log(this.startIndex, this.endIndex)
   }
 }
 
