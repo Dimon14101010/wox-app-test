@@ -1,21 +1,41 @@
-<div *ngFor="let page of pages.pages"> {{page}}</div>
-<div><input (keyup)="setPage();changePager()" [(ngModel)]="searchText" type="text" placeholder="search by name..."></div>
+<div class="pagesContainer">
+  <div class="pagesBlocks"
+       (click)="setPage(1)">First
+  </div>
+  <div *ngIf="dataArray.currentPage > 1"
+       class="pagesBlocks"
+    (click)="setPage(dataArray.currentPage - 1)">prev</div>
+<div *ngFor="let page of pageBlocks">
+  <div class="pagesBlocks"
+        (click)="setPage(page)">{{page}}
+  </div>
+</div>
+  <div *ngIf="dataArray.currentPage < dataArray.lastPage"
+       class="pagesBlocks"
+    (click)="setPage(dataArray.currentPage + 1)">Next</div>
+  <div class="pagesBlocks"
+       (click)="setPage(dataArray.lastPage)">Last</div>
+</div>
+<p>pages:{{dataArray.currentPage}} / {{dataArray.totalPages}}</p>
+<div>
+  <input class="searchBlock" (keyup)="setPage()" [(ngModel)]="searchText" type="text" placeholder="search...">
+</div>
 <table>
   <tr align="center">
-    <th (click)="sortFunc(0)">
+    <th (click)="setPage(dataArray.currentPage , 1)">
       {{headerdata?.id}}
     </th>
-    <th (click)="sortFunc(1)">
+    <th (click)="setPage(dataArray.currentPage , 2)">
       <span>{{headerdata?.name}}</span>
     </th>
-    <th (click)="sortFunc(2)">
+    <th (click)="setPage(dataArray.currentPage , 3)">
       {{headerdata?.price}}
     </th>
-    <th (click)="sortFunc(3)">
+    <th (click)="setPage(dataArray.currentPage , 4)">
       {{headerdata?.quantity}}
     </th>
   </tr>
-  <tr *ngFor="let row of pageItem; let i=index" align="center">
+  <tr *ngFor="let row of pageItems; let i=index" align="center">
     <td *ngFor="let cell of row ">{{cell}}</td>
   </tr>
 </table>

@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {PageService} from "../services/page.service";
-import {reject} from "q";
 
 @Component({
   selector: 'app-root',
@@ -12,14 +11,12 @@ export class AppComponent implements OnInit {
   itemsOnPage;
   sortDirection;
   searchText;
-  pages: any = [];
-  pageItem: any[];
+  dataArray: any = [];
+  pageItems: any[];
   headerdata: any = [];
   data: any = [];
-  startIndex: number;
-  endIndex: number;
-  sortTarget = 0;
-  pageTest;
+  sortKey;
+  pageBlocks;
   constructor (private http: HttpClient, private pageService: PageService) {
 
   }
@@ -28,21 +25,15 @@ export class AppComponent implements OnInit {
         .subscribe((response: Array<any>) => {
           this.data = response.slice(1, response.length);
           this.headerdata = response[0];
-          this.setPage();
+          this.setPage(1, this.sortKey, this.sortDirection);
         });
   }
-  setPage () {
-     this.pages = this.pageService.getPage(this.data);
-     this.pageItem = this.pageService.getPageService(this.data, this.searchText)
-       .slice(this.pages.startIndex, this.pages.lastIndex + 1);
-  }
-  changePager () {
-    console.log(this.pageItem, this.pageTest)
-    this.pageTest = this.pageService.getPage(this.pageItem);
-  }
-  sortFunc(arrNumber){
-    this.sortDirection = !this.sortDirection;
-    this.sortTarget = arrNumber;
+  setPage (page, sortKey, sortDirect) {
+     this.sortDirection = !this.sortDirection;
+     this.dataArray = this.pageService.getPagination(this.data, this.searchText, page, this.itemsOnPage, sortKey, this.sortDirection);
+     console.log(this.dataArray)
+     this.pageItems = this.dataArray.array.slice(this.dataArray.startIndex, this.dataArray.lastIndex + 1);
+     this.pageBlocks = this.dataArray.pages;
   }
 
 }

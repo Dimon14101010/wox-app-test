@@ -4,3 +4,22 @@ tr:nth-of-type(odd){
 td {
   padding: 10px;
 }
+th{
+  padding: 10px;
+}
+.pagesContainer{
+  display: flex;
+  flex-direction: row;
+}
+.pagesBlocks{
+  background-color: lightgray;
+  padding: 10px;
+  border-right: 1px solid white;
+  cursor: pointer;
+}
+.searchBlock{
+  border: none;
+  border-bottom: 1px solid black;
+  font-size: 20px;
+  padding: 10px;
+}
