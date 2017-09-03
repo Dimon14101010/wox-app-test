@@ -6,7 +6,7 @@ import * as _ from "underscore";
 @Injectable ()
 export class PageService {
   constructor(private http: HttpClient) { }
-  getPagination (array, searchText, currentPage = 1, itemsOnPage = 50, sortKey, sortDirect) {
+  getPagination (array, searchText, currentPage = 1, itemsOnPage = 50, sortKey, sortDirect, spliceArr) {
     if (sortKey) {
         array = array.sort((a: number, b: number) => {
         if (sortKey === 2) {
@@ -45,7 +45,14 @@ export class PageService {
       let lastIndex = Math.min(startIndex + itemsOnPage - 1, totalItems);
       let pages = _.range(startPage, lastPage + 1);
       console.log('pages inside', pages)
-
+      let slicedArray
+      if (spliceArr == 'big'){
+        slicedArray = array;
+      }else if (spliceArr == 'custom'){
+        slicedArray = array.forEach((insArr) => {insArr = insArr.splice(2, 1, ''); console.log(insArr);})
+      } else if (spliceArr == 'small'){
+        slicedArray = array.forEach((insArr) => {insArr = insArr.splice(1, 2, '', ''); console.log(insArr);})
+      }
       return {
         array,
         totalItems,

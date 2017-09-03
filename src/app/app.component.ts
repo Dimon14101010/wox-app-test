@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {PageService} from "../services/page.service";
 
@@ -8,15 +8,17 @@ import {PageService} from "../services/page.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  sliceArray: any;
   itemsOnPage;
   sortDirection;
   searchText;
   dataArray: any = [];
   pageItems: any[];
-  headerdata: any = [];
-  data: any = [];
+  @Input() headerdata: any = [];
+  @Input() data: any = [];
   sortKey;
   pageBlocks;
+  description;
   constructor (private http: HttpClient, private pageService: PageService) {
 
   }
@@ -25,15 +27,19 @@ export class AppComponent implements OnInit {
         .subscribe((response: Array<any>) => {
           this.data = response.slice(1, response.length);
           this.headerdata = response[0];
-          this.setPage(1, this.sortKey, this.sortDirection);
+          this.setPage(1, this.sortKey, this.sortDirection, 'big');
         });
   }
-  setPage (page, sortKey, sortDirect) {
+  setPage (page, sortKey, sortDirect, sliceSize) {
      this.sortDirection = !this.sortDirection;
-     this.dataArray = this.pageService.getPagination(this.data, this.searchText, page, this.itemsOnPage, sortKey, this.sortDirection);
+     this.dataArray = this.pageService
+       .getPagination(this.data, this.searchText, page, this.itemsOnPage, sortKey, this.sortDirection, sliceSize);
      console.log(this.dataArray)
      this.pageItems = this.dataArray.array.slice(this.dataArray.startIndex, this.dataArray.lastIndex + 1);
      this.pageBlocks = this.dataArray.pages;
+  }
+  setDescription (value){
+    this.description = 'item : ' + value[1] + ' --- price : ' + value[2];
   }
 
 }
