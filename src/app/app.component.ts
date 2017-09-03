@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {PageService} from "../services/page.service";
+import {reject} from "q";
 
 @Component({
   selector: 'app-root',
@@ -7,16 +9,18 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  itemsOnPage = 50;
+  itemsOnPage;
   sortDirection;
   searchText;
-  pages = [];
+  pages: any = [];
+  pageItem: any[];
   headerdata: any = [];
   data: any = [];
   startIndex: number;
   endIndex: number;
   sortTarget = 0;
-  constructor (private http: HttpClient) {
+  pageTest;
+  constructor (private http: HttpClient, private pageService: PageService) {
 
   }
   ngOnInit () {
@@ -24,28 +28,22 @@ export class AppComponent implements OnInit {
         .subscribe((response: Array<any>) => {
           this.data = response.slice(1, response.length);
           this.headerdata = response[0];
-          this.pages = new Array(Math.ceil(this.data.length / this.itemsOnPage));
+          this.setPage();
         });
-      this.startIndex = 0;
-      this.endIndex = this.itemsOnPage;
-
-
+  }
+  setPage () {
+     this.pages = this.pageService.getPage(this.data);
+     this.pageItem = this.pageService.getPageService(this.data, this.searchText)
+       .slice(this.pages.startIndex, this.pages.lastIndex + 1);
+  }
+  changePager () {
+    console.log(this.pageItem, this.pageTest)
+    this.pageTest = this.pageService.getPage(this.pageItem);
   }
   sortFunc(arrNumber){
     this.sortDirection = !this.sortDirection;
     this.sortTarget = arrNumber;
   }
-  nextPage (){
-    this.startIndex += this.itemsOnPage;
-    this.endIndex += this.itemsOnPage;
-  }
-  prevPage (){
-    this.startIndex -= this.itemsOnPage;
-    this.endIndex -= this.itemsOnPage;
-  }
-  setPage (page){
-    this.startIndex = (page) * this.itemsOnPage;
-    this.endIndex = (this.startIndex + this.itemsOnPage);
-  }
+
 }
 

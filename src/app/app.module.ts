@@ -7,6 +7,7 @@ import {HttpModule} from "@angular/http";
 import {SearchPipe} from "../pipes/search.pipe";
 import {FormsModule} from "@angular/forms";
 import {SortPipe} from "../pipes/sort.pipe";
+import {PageService} from "../services/page.service";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import {SortPipe} from "../pipes/sort.pipe";
     HttpModule,
     FormsModule
   ],
-  providers: [],
+  providers: [PageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
