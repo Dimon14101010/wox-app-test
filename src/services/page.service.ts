@@ -1,26 +1,25 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import * as _ from "underscore";
 
 
 @Injectable ()
 export class PageService {
-  constructor(private http: HttpClient) { }
-  getPagination (array, searchText, currentPage = 1, itemsOnPage = 50, sortKey, sortDirect, spliceArr) {
+  constructor() { }
+  getPagination (array, searchText, currentPage = 1, itemsOnPage = 50, sortKey, sortDirect) {
     if (sortKey) {
         array = array.sort((a: number, b: number) => {
         if (sortKey === 2) {
         if (a[sortKey - 1] > b[sortKey - 1]) {
-        if (!sortDirect){return 1;} else {return -1}
+        if (!sortDirect) {return 1; } else {return -1 }
       } else if (a[sortKey - 1] < b[sortKey - 1]) {
-        if (!sortDirect){return -1;} else {return 1;}
+        if (!sortDirect) {return -1; } else {return 1; }
       } else {
         return 0;
       }} else {
-           if (!sortDirect){return a[sortKey - 1] - b[sortKey - 1];} else {return b[sortKey - 1] - a[sortKey - 1];}
+           if (!sortDirect) {return a[sortKey - 1] - b[sortKey - 1]; } else {return b[sortKey - 1] - a[sortKey - 1]; }
         }
-        })
-    };
+        });
+    }
     if (!searchText) {
       let totalItems = array.length;
       let totalPages = Math.ceil(totalItems / itemsOnPage);
@@ -43,15 +42,9 @@ export class PageService {
 
       let startIndex = (currentPage - 1) * itemsOnPage;
       let lastIndex = Math.min(startIndex + itemsOnPage - 1, totalItems);
-      let pages = _.range(startPage, lastPage + 1);
-      console.log('pages inside', pages)
-      let slicedArray
-      if (spliceArr == 'big'){
-        slicedArray = array;
-      }else if (spliceArr == 'custom'){
-        slicedArray = array.forEach((insArr) => {insArr = insArr.splice(2, 1, ''); console.log(insArr);})
-      } else if (spliceArr == 'small'){
-        slicedArray = array.forEach((insArr) => {insArr = insArr.splice(1, 2, '', ''); console.log(insArr);})
+      let pages: Array<any> = [];
+      for (let i = startPage ; i < lastPage +1 ; i++){
+        pages.push(i);
       }
       return {
         array,
@@ -93,8 +86,10 @@ export class PageService {
 
       let startIndex = (currentPage - 1) * itemsOnPage;
       let lastIndex = Math.min(startIndex + itemsOnPage - 1, totalItems);
-      let pages = _.range(startPage, lastPage + 1);
-      console.log('pages inside', pages)
+      let pages: Array<any> = [];
+      for (let i = startPage ; i < lastPage +1 ; i++){
+        pages.push(i);
+      }
 
       return {
         array,

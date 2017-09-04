@@ -8,7 +8,7 @@ import {PageService} from "../services/page.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  sliceArray: any;
+  sliceArray: any = 4;
   itemsOnPage;
   sortDirection;
   searchText;
@@ -27,13 +27,13 @@ export class AppComponent implements OnInit {
         .subscribe((response: Array<any>) => {
           this.data = response.slice(1, response.length);
           this.headerdata = response[0];
-          this.setPage(1, this.sortKey, this.sortDirection, 'big');
+          this.setPage(1, this.sortKey, this.sortDirection);
         });
   }
-  setPage (page, sortKey, sortDirect, sliceSize) {
+  setPage (page, sortKey, sortDirect) {
      this.sortDirection = !this.sortDirection;
      this.dataArray = this.pageService
-       .getPagination(this.data, this.searchText, page, this.itemsOnPage, sortKey, this.sortDirection, sliceSize);
+       .getPagination(this.data, this.searchText, page, this.itemsOnPage, sortKey, this.sortDirection);
      console.log(this.dataArray)
      this.pageItems = this.dataArray.array.slice(this.dataArray.startIndex, this.dataArray.lastIndex + 1);
      this.pageBlocks = this.dataArray.pages;

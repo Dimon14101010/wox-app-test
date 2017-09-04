@@ -1,8 +1,7 @@
 <div class="radioBlock">
-  Big<input type="radio" name="arraySize" (click)="setPage(p , s , sd, 'big')">
-  Small<input type="radio" name="arraySize" (click)="setPage(p, s, sd, 'small')">
-  Custom<input type="radio" name="arraySize" (click)="setPage(a , d, f, 'custom')">
-  {{sliceArray}}
+  Big<input type="radio" name="arraySize" value="4" [(ngModel)]="sliceArray">
+  Small<input type="radio" name="arraySize" value="2" [(ngModel)]="sliceArray">
+  Custom<input type="radio" name="arraySize" value="3" [(ngModel)]="sliceArray">
 </div>
 <div class="pagesContainer">
   <div class="pagesBlocks"
@@ -34,15 +33,15 @@
     <th (click)="setPage(dataArray.currentPage , 2)">
       <span>{{headerdata?.name}}</span>
     </th>
-    <th (click)="setPage(dataArray.currentPage , 3)">
+    <th *ngIf="sliceArray >= 3" (click)="setPage(dataArray.currentPage , 3)">
       {{headerdata?.price}}
     </th>
-    <th (click)="setPage(dataArray.currentPage , 4)">
+    <th *ngIf="sliceArray >= 4" (click)="setPage(dataArray.currentPage , 4)">
       {{headerdata?.quantity}}
     </th>
   </tr>
-  <tr *ngFor="let row of pageItems; let i=index" align="center">
-    <td *ngFor="let cell of row " (click)="setDescription(row)">{{cell}}</td>
+  <tr *ngFor="let row of pageItems;" align="center">
+    <td *ngFor="let cell of row | slice : 0: sliceArray" (click)="setDescription(row)">{{cell}}</td>
   </tr>
 </table>
 {{description}}
